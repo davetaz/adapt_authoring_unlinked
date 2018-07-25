@@ -15,7 +15,6 @@ define(function(require) {
   });
 
   function triggerEvent() {
-    console.log(Origin);
     var course = Origin.editor.data.course;
     if (!course.get('_extensions')._trackingHub) {
       console.log('no tracking hub');

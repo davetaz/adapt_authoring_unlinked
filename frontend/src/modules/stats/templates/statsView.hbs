@@ -3,7 +3,15 @@
         <div class="tb-heading col-row tb-row">
         </div>
         <ul class="users clearfix grid-layout">
-            {{!-- Users get rendered in here --}}
+            {{#eachProperty moduleCompletion}}
+                <li>{{property}}: {{value}}</li>
+            {{/eachProperty }}
+        </ul>
+
+        <ul class="users clearfix grid-layout">
+            {{#eachProperty completedModulesCount}}
+                <li>{{property}}: {{value}}</li>
+            {{/eachProperty }}
         </ul>
 
         <div class="action-buttons">
