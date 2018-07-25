@@ -18,6 +18,12 @@ define(function(require) {
       'click a.course-delete': 'deleteProjectPrompt',
       'click .projects-details-tags-button-show': 'onProjectShowTagsButtonClicked',
       'click .projects-details-tags-button-hide': 'onProjectHideTagsButtonClicked',
+      'click .course-stats-element': 'onStatsClicked',
+    },
+
+    onStatsClicked: function() {
+      var menuItemId = this.model.get('_id');
+      Origin.router.navigateTo('stats/' + menuItemId);
     },
 
     preRender: function() {
