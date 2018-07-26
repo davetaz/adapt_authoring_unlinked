@@ -20,9 +20,12 @@ define(function(require) {
       console.log('no tracking hub');
       noTrackingPrompt();
     } else {
-      Origin.sidebar.addView(new StatsSidebarView().$el, {
+      //var sideBarView = new StatsSidebarView().setModel(new Backbone.Model({ courseData: course }));
+      //Origin.sidebar.addView(sideBarView.$el, {
+      Origin.sidebar.addView(new StatsSidebarView(new Backbone.Model({ courseData: course })).$el, {
         "backButtonText": "Back to courses",
-        "backButtonRoute": "/#dashboard"
+        "backButtonRoute": "/#dashboard",
+        model: new Backbone.Model({ courseData: course })
       });
       Origin.contentPane.setView(StatsView, { model: new Backbone.Model({ courseData: course }) });
     }

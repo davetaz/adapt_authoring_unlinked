@@ -14,13 +14,6 @@ define(function(require){
   });
 
   var StatsView = OriginView.extend({
-    tagName: 'div',
-    className: 'courseStats',
-    settings: {
-      autoRender: false
-    },
-    views: [],
-
     render: function() {
       var data = this.data ? this.data : false;
       var template = Handlebars.templates[this.constructor.template];
@@ -35,26 +28,6 @@ define(function(require){
     initialize: function() {
       OriginView.prototype.initialize.apply(this, arguments);
       Origin.trigger('location:title:update', { title: "Course statistics: " + this.model.get('courseData').get('title') });
-      
-      console.log(this.model.get('courseData'));
-      var self = this;
-      $.ajax({
-        url: '/api/stats/' + this.model.get('courseData').get('_id'),
-        type: 'GET',
-        success: function (data) {
-          self.data = data;
-          self.render();
-        },
-        error: function() {
-          Origin.Notify.alert({
-            type: 'error',
-            text: Origin.l10n.t('Failed to load course data')
-          });
-        }
-      })
-
-      //this.render();
-      //this.initData();
     }
 
   }, {

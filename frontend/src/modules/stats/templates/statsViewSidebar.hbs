@@ -1,0 +1,37 @@
+<h1>Stats</h1>
+<table>
+    <tr>
+        <td>
+            Total completions
+        </td>
+        <td>
+            X
+        </td>
+    </tr>
+</table>
+<h2>Page completions</h1>
+    {{log "outputing modules"}}
+    {{log modules }}
+    {{log "outputing completion stats"}}
+    {{log moduleCompletion }}
+    {{log "module title"}}
+    {{log modules.58d17f03d084d5167a04ba01 }}
+    {{log "module completion number"}}
+    {{log moduleCompletion.58d17f03d084d5167a04ba01 }}
+<table>
+    {{#eachProperty moduleCompletion}}
+        <tr>
+            <td>{{lookup (lookup ../modules '58d17f03d084d5167a04ba01') 'title'}}</td> 
+            <td>{{value}}</td>
+        </tr>
+    {{/eachProperty }}
+</table>
+<h2>By count</h1>
+<table>
+    {{#eachProperty completedModulesCount}}
+        <tr>
+            <td>Completed <b>{{property}}</b> pages</td> 
+            <td>{{value}}</td>
+        </tr>
+    {{/eachProperty }}
+</table>
