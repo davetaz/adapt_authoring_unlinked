@@ -2,8 +2,6 @@
 define(function(require) {
   var Origin = require('core/origin');
   var SidebarItemView = require('modules/sidebar/views/sidebarItemView');
-  //var OriginView = require('core/views/originView');
-  var Helpers = require('core/helpers');
 
   Handlebars.registerHelper('eachProperty', function(context, options) {
     var ret = "";
@@ -13,18 +11,12 @@ define(function(require) {
     }
     return ret;
   });
-  Handlebars.registerHelper("log", function(something) {
-  	console.log('THIS IS THE DEBUGGER');
-  	debugger;
-  	console.log(arguments);
-  	console.log(something);
-  });
 
   var statsSidebarView = SidebarItemView.extend({
   	tagName: 'div',
     className: 'statsSidebarView',
     settings: {
-      autoRender: false
+      autoRender: true
     },
     views: [],
 
@@ -65,6 +57,7 @@ define(function(require) {
     },
 
     initialize: function(model) {
+      SidebarItemView.prototype.initialize.apply(this, arguments);
       this.model = model;
       
       var self = this;
@@ -91,12 +84,11 @@ define(function(require) {
 
 	  Promise.all(promises).then(function() {
 	  	self.data = data;
-		self.render();
+		  self.render();
 	  });
-	}
+	  }
    }, {
     	template: 'statsViewSidebar'
    });
-
   return statsSidebarView;
 });
