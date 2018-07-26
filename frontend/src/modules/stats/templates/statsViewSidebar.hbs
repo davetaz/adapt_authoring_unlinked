@@ -10,21 +10,13 @@
     </tr>
 </table>
 <h2>Page completions</h1>
-    {{log "outputing modules"}}
-    {{log modules }}
-    {{log "outputing completion stats"}}
-    {{log moduleCompletion }}
-    {{log "module title"}}
-    {{log modules.58d17f03d084d5167a04ba01 }}
-    {{log "module completion number"}}
-    {{log moduleCompletion.58d17f03d084d5167a04ba01 }}
 <table>
-    {{#eachProperty moduleCompletion}}
+    {{#each moduleData}}
         <tr>
-            <td>{{lookup (lookup ../modules '58d17f03d084d5167a04ba01') 'title'}}</td> 
-            <td>{{value}}</td>
+            <td>{{displayTitle}}</td>
+            <td>{{lookup ../moduleCompletion _id}}</td>
         </tr>
-    {{/eachProperty }}
+    {{/each}}
 </table>
 <h2>By count</h1>
 <table>

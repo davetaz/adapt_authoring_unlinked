@@ -14,6 +14,9 @@ define(function(require) {
     return ret;
   });
   Handlebars.registerHelper("log", function(something) {
+  	console.log('THIS IS THE DEBUGGER');
+  	debugger;
+  	console.log(arguments);
   	console.log(something);
   });
 
@@ -35,61 +38,65 @@ define(function(require) {
       return this;
     },
 
-    getModuleData: function(module,callback) {
-    	if (module=="581c76824d7b7e82691e408b") {module="5b58589452fb762f90847e63";}
-    	if (module=="584928ca4d7b7e82691e4bd1") {module="5b58589452fb762f90847e64";}
-    	if (module=="584928ce4d7b7e82691e4c28") {module="5b58589452fb762f90847e65";}
-    	if (module=="584928f24d7b7e82691e4cf1") {module="5b58589452fb762f90847e67";}
-    	if (module=="58d17f03d084d5167a04ba01") {module="5b58589452fb762f90847e69";}
-    	if (module=="594a4e5ad084d5167a04ffb6") {module="5b58589452fb762f90847e6b";}
+    getModuleData: function(courseID,callback) {
     	$.ajax({
-    		url: 'api/content/contentobject/' + module,
-    		type: 'GET',
-    		success: function (data) {
-    			//callback(null,data.displayTitle);
-    			callback(null,10);
-    		},
-    		error: function() {
-    			callback(null,null);
-    		}
-    	})
+      		url: '/api/content/contentobject?_courseId=' + courseID,
+      		type: 'GET',
+      		success: function (contentObjects) {
+      			callback(null,contentObjects);
+      		},
+      		error:function() {
+	      		callback(null,null);	  	
+          	}
+        });
+    },
+
+    getStats: function(courseID,callback) {
+    	$.ajax({
+	        url: '/api/stats/' + courseID,
+	        type: 'GET',
+	        success: function (data) {
+	        	callback(null,data);
+	        },
+	        error: function() {
+	          callback(null,null);
+	        }
+	    })
     },
 
     initialize: function(model) {
       this.model = model;
       
       var self = this;
-      $.ajax({
-        url: '/api/stats/' + this.model.get('courseData').get('_id'),
-        type: 'GET',
-        success: function (data) {
-        	
-        	data.modules = {};
 
-			var promises = [];
+      var data = {};
+      
+      var promises = [];
+      var courseID = this.model.get('courseData').get('_id');      
+      promises.push(new Promise ((resolve) => {
+      	self.getModuleData(courseID, function(err,res) {
+      		data.moduleData = res;
+      		resolve();
+      	})
+      }))
 
-			Object.keys(data.moduleCompletion).forEach(function(module){
-			    promises.push(self.getModuleData(module,function(err,res) {
-			    	data.modules[module] = res;
-			    }));
-			});
+      promises.push(new Promise ((resolve) => {
+      		self.getStats(courseID, function(err,res) {
+      			data.moduleCompletion = res.moduleCompletion;
+      			data.completedModulesCount = res.completedModulesCount;
+      			resolve();
+      		})
+      }));
 
-			Promise.all(promises).then(function(translateResults){
-				self.data = data;
-			    self.render();
-			});
-        },
-        error: function() {
-          Origin.Notify.alert({
-            type: 'error',
-            text: Origin.l10n.t('Failed to load course data')
-          });
-        }
-      })
-    }
-  }, {
-    template: 'statsViewSidebar'
-  });
+
+	  Promise.all(promises).then(function() {
+	  	self.data = data;
+		self.render();
+	  });
+	}
+   }, {
+    	template: 'statsViewSidebar'
+   });
 
   return statsSidebarView;
 });
