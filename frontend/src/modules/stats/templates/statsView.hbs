@@ -22,7 +22,7 @@
 			<td>{{id}}</td>
 			{{#each ../contentObjects}}
 				<td>
-					{{lookup @../this _id}}
+					<progress value="{{lookup @../this _id}}" max="100">{{lookup @../this _id}}%</progress>
 				</td>
 			{{/each}}
 			<td></td>
