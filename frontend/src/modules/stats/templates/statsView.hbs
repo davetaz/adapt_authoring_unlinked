@@ -1,0 +1,33 @@
+<table id="userProfiles">
+  <thead>
+	<tr>
+		<th>Learner</th>
+		{{#each contentObjects}}
+		<th>
+			{{displayTitle}}
+		</th>
+		{{/each}}
+		<th>
+			Overall
+		</th>
+		<th>
+			Modules Complete
+		</th>
+	</tr>
+  </thead>
+  <tbody>
+	{{#each profiles}}
+
+		<tr>
+			<td>{{id}}</td>
+			{{#each ../contentObjects}}
+				<td>
+					{{lookup @../this _id}}
+				</td>
+			{{/each}}
+			<td></td>
+			<td>{{completedModulesCount}}</td>
+		</tr>
+	{{/each}}
+  </tbody>
+</table>
