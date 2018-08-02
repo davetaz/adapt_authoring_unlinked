@@ -1,28 +1,27 @@
-<table id="userProfiles">
+<table id="userProfiles" class="dataTable display">
   <thead>
 	<tr>
 		<th>Learner</th>
 		{{#each contentObjects}}
-		<th>
+		<th class="contentObject">
 			{{displayTitle}}
 		</th>
 		{{/each}}
-		<th>
+		<th class="contentObject">
 			Overall
 		</th>
-		<th>
+		<th class="contentObject">
 			Modules Complete
 		</th>
 	</tr>
   </thead>
   <tbody>
 	{{#each profiles}}
-
 		<tr>
 			<td>{{id}}</td>
 			{{#each ../contentObjects}}
 				<td>
-					<progress value="{{lookup @../this _id}}" max="100">{{lookup @../this _id}}%</progress>
+					<progress value="{{lookup @../this _id}}" max="100" data-label="{{lookup @../this _id}}%">{{lookup @../this _id}}%</progress>
 				</td>
 			{{/each}}
 			<td></td>

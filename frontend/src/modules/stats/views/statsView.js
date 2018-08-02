@@ -3,7 +3,7 @@ define(function(require){
   var Origin = require('core/origin');
   var OriginView = require('core/views/originView');
   var Helpers = require('core/helpers');
-  var DataTables = require('modules/stats/js/datatables');
+  var DataTables = require('modules/stats/libraries/datatables');
 
   Handlebars.registerHelper("log", function(something) {
     console.log(something);
@@ -23,7 +23,12 @@ define(function(require){
     postRender: function() {
       //Fix the ordering to take into account the number of contentObjects
       $('#userProfiles').DataTable({
-        "order": [[ 8, "desc" ]]
+        "order": [[ 8, "desc" ]],
+        "pageLength": 25,
+        "dom": 'Bfrtip',
+        "buttons": [
+            'copy', 'csv', 'excel', 'print'
+        ]
       } );
     },
 
