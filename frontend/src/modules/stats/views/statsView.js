@@ -3,7 +3,7 @@ define(function(require){
   var Origin = require('core/origin');
   var OriginView = require('core/views/originView');
   var Helpers = require('core/helpers');
-  var DataTables = require('modules/stats/libraries/datatables');
+  var DataTables = require('modules/stats/js/datatables');
 
   Handlebars.registerHelper("log", function(something) {
     console.log(something);
